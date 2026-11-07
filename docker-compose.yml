@@ -1,0 +1,38 @@
+services:
+  db:
+    image: mariadb:11
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASSWORD:-ChangeMe_Root@2569}
+      MARIADB_DATABASE: ${DB_NAME:-judge_scoring}
+      MARIADB_USER: ${DB_USER:-judge_app}
+      MARIADB_PASSWORD: ${DB_PASSWORD:-ChangeMe_App@2569}
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 30
+
+  app:
+    build: ./php
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_HOST: db
+      DB_NAME: ${DB_NAME:-judge_scoring}
+      DB_USER: ${DB_USER:-judge_app}
+      DB_PASSWORD: ${DB_PASSWORD:-ChangeMe_App@2569}
+      APP_TIMEZONE: Asia/Bangkok
+      ADMIN_DEFAULT_USERNAME: ${ADMIN_DEFAULT_USERNAME:-admin}
+      ADMIN_DEFAULT_PASSWORD: ${ADMIN_DEFAULT_PASSWORD:-Admin@2569}
+    ports:
+      - "${APP_PORT:-8080}:80"
+    volumes:
+      - ./php/src:/var/www/html
+
+volumes:
+  db_data:

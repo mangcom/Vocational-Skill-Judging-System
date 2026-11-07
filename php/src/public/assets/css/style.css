@@ -1,0 +1,64 @@
+body {
+    background-color: #f4f6f9;
+    font-family: 'Sarabun', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif;
+}
+
+.btn, .form-control, .form-select, .navbar, table, .modal {
+    font-family: 'Sarabun', -apple-system, BlinkMacSystemFont, 'Segoe UI', Tahoma, sans-serif;
+}
+
+.navbar-brand {
+    font-weight: 600;
+}
+
+.card {
+    border: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.table-score-input {
+    width: 90px;
+}
+
+.skill-section + .skill-section {
+    margin-top: 1.5rem;
+}
+
+.score-pending {
+    color: #adb5bd;
+}
+
+.table-fixed-height {
+    max-height: 65vh;
+    overflow-y: auto;
+}
+
+footer {
+    color: #8a93a2;
+    font-size: 0.85rem;
+}
+
+.stat-link-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.stat-link-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+    color: inherit;
+}
+
+#liveScoreTotal {
+    position: fixed;
+    top: 80px;
+    right: 20px;
+    z-index: 1040;
+    min-width: 160px;
+}
+
+.score-input:invalid {
+    border-color: #dc3545;
+}

@@ -1,0 +1,11 @@
+.env
+
+# ไฟล์เอกสารเกณฑ์ที่อัปโหลดจริงระหว่างใช้งาน (ไม่ควรอยู่ใน git)
+php/src/storage/uploads/*
+!php/src/storage/uploads/.gitkeep
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
