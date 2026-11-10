@@ -44,6 +44,8 @@ $pageTitle = 'เข้าสู่ระบบ';
             <p class="text-center text-muted mb-4">เข้าสู่ระบบเพื่อให้คะแนนหรือจัดการข้อมูล</p>
             <?php if ($error): ?>
                 <div class="alert alert-danger">⚠️ <?= e($error) ?></div>
+            <?php elseif (isset($_GET['installed'])): ?>
+                <div class="alert alert-info">ℹ️ ระบบติดตั้งเรียบร้อยแล้ว กรุณาเข้าสู่ระบบ</div>
             <?php endif; ?>
             <form method="post">
                 <?= csrf_field() ?>
