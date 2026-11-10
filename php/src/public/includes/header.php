@@ -32,6 +32,7 @@ $user = current_user();
                     <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/teams.php') ?>">👥 ทีมผู้เข้าแข่งขัน</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/summary.php') ?>">📊 สรุปคะแนน</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/score_sheet.php') ?>">🖨️ ใบให้คะแนน (สำรอง)</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/backup.php') ?>">🗄️ Import/Export</a></li>
                 <?php else: ?>
                     <li class="nav-item"><a class="nav-link" href="<?= base_url('judge/dashboard.php') ?>">✏️ ให้คะแนน</a></li>
                     <?php if (is_head_judge($user)): ?>

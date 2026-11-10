@@ -1,7 +1,13 @@
 FROM php:8.2-apache
 
-RUN docker-php-ext-install pdo_mysql \
-    && a2enmod rewrite
+# default-mysql-client -> คำสั่ง mysql/mysqldump สำหรับ Export/Import ฐานข้อมูล
+# libzip-dev -> ไลบรารีที่ docker-php-ext-install zip ต้องใช้ตอน build ส่วนขยาย ZipArchive
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends default-mysql-client libzip-dev \
+    && docker-php-ext-install pdo_mysql zip \
+    && a2enmod rewrite \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # ชี้ DocumentRoot ไปที่ public/ เพื่อไม่ให้เข้าถึงโค้ดฝั่ง app/ จากเว็บได้ตรง ๆ
 RUN sed -ri -e 's!/var/www/html!/var/www/html/public!g' /etc/apache2/sites-available/*.conf /etc/apache2/apache2.conf \
