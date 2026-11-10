@@ -41,6 +41,7 @@ $user = current_user();
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/score_sheet.php') ?>">🖨️ ใบให้คะแนน (สำรอง)</a></li>
                     <?php endif; ?>
                 <?php endif; ?>
+                <li class="nav-item"><a class="nav-link" href="<?= base_url('help.php') ?>">❓ คู่มือการใช้งาน</a></li>
             </ul>
             <span class="navbar-text text-light me-3">
                 👤 <?= e($user['full_name']) ?> (<?= e($user['role'] === 'admin' ? '⚙️ ผู้ดูแลระบบ' : position_label($user['position'] ?? 'กรรมการ')) ?>)
