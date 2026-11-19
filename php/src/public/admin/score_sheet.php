@@ -21,10 +21,20 @@ $judgesStmt = $pdo->prepare('
     JOIN judge_skills js ON js.judge_id = u.id
     JOIN skills s ON s.id = js.skill_id
     WHERE u.role = "judge" AND s.division_id = ?
-    ORDER BY u.full_name
 ');
 $judgesStmt->execute([$currentDivisionId]);
 $judges = $judgesStmt->fetchAll();
+
+// --- เรียงกรรมการตามตำแหน่ง: ประธาน -> รองประธาน -> กรรมการ -> กรรมการและเลขานุการ -> ผู้ช่วยกรรมการและเลขานุการ ---
+$positionRank = array_flip(judge_position_options());
+usort($judges, function ($a, $b) use ($positionRank) {
+    $rankA = $positionRank[$a['position'] ?? 'กรรมการ'] ?? count($positionRank);
+    $rankB = $positionRank[$b['position'] ?? 'กรรมการ'] ?? count($positionRank);
+    if ($rankA !== $rankB) {
+        return $rankA <=> $rankB;
+    }
+    return strcmp($a['full_name'], $b['full_name']);
+});
 
 $teamsById = [];
 foreach ($teams as $t) {
@@ -157,6 +167,8 @@ if (!empty($sheets)) {
 <body>
 <div class="toolbar no-print">
     <button onclick="window.print()">🖨️ พิมพ์ / บันทึกเป็น PDF (<?= count($sheets) ?> ชุด)</button>
+    <a href="<?= base_url('admin/skills.php?division_id=' . $currentDivisionId) ?>">🏆 <?= e($currentDivision['name']) ?></a>
+    <span style="color:#999;">|</span>
     <a href="<?= base_url('admin/score_sheet.php?division_id=' . $currentDivisionId) ?>">⬅️ กลับไปเลือกใหม่</a>
 </div>
 <div class="sheet">
