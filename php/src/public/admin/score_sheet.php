@@ -72,7 +72,12 @@ foreach ($requestedPairs as [$pTeamId, $pJudgeId]) {
     $criteriaBySkill = [];
     if (!empty($skillIds)) {
         $placeholders = implode(',', array_fill(0, count($skillIds), '?'));
-        $critStmt = $pdo->prepare("SELECT * FROM criteria WHERE skill_id IN ({$placeholders}) ORDER BY skill_id, sort_order, id");
+        $critStmt = $pdo->prepare("
+            SELECT c.*, cg.code AS group_code, cg.name AS group_name
+            FROM criteria c
+            LEFT JOIN criteria_groups cg ON cg.id = c.group_id
+            WHERE c.skill_id IN ({$placeholders}) ORDER BY c.skill_id, c.sort_order, c.id
+        ");
         $critStmt->execute($skillIds);
         foreach ($critStmt->fetchAll() as $c) {
             $criteriaBySkill[(int)$c['skill_id']][] = $c;
@@ -129,6 +134,7 @@ if (!empty($sheets)) {
         .col-score { width: 10%; text-align: center; }
         .col-note { width: 10%; }
         .skill-total td { font-weight: 700; background: #f5f5f5; }
+        .group-row td { background: #fafafa; font-size: 12px; padding-top: 6px; padding-bottom: 6px; }
         .grand-total-cell { border: none; padding-top: 14px; font-size: 14px; font-weight: 700; text-align: right; }
         .signature-cell { border: none; }
         .signature { display: flex; justify-content: flex-end; }
@@ -194,7 +200,14 @@ if (!empty($sheets)) {
                         </tr>
                         </thead>
                         <tbody>
-                        <?php foreach ($skill['criteria'] as $c): $skillTotal += (float)$c['max_score']; ?>
+                        <?php $prevGroupCode = null; foreach ($skill['criteria'] as $c): $skillTotal += (float)$c['max_score'];
+                            if (($c['group_code'] ?? null) !== $prevGroupCode):
+                                $prevGroupCode = $c['group_code'] ?? null;
+                                if ($prevGroupCode !== null): ?>
+                            <tr class="group-row">
+                                <td colspan="6"><strong><?= e($c['group_code']) ?> <?= e($c['group_name']) ?></strong></td>
+                            </tr>
+                        <?php endif; endif; ?>
                             <tr>
                                 <td class="col-code"><?= e($c['code']) ?></td>
                                 <td class="col-item"><?= e($c['name']) ?></td>

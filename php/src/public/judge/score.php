@@ -36,7 +36,12 @@ if ($allowedTeamIds !== null && !in_array($teamId, $allowedTeamIds, true)) {
 
 $skillIds = array_map('intval', array_column($mySkills, 'id'));
 $placeholders = implode(',', array_fill(0, count($skillIds), '?'));
-$critStmt = $pdo->prepare("SELECT * FROM criteria WHERE skill_id IN ({$placeholders}) ORDER BY skill_id, sort_order, id");
+$critStmt = $pdo->prepare("
+    SELECT c.*, cg.code AS group_code, cg.name AS group_name
+    FROM criteria c
+    LEFT JOIN criteria_groups cg ON cg.id = c.group_id
+    WHERE c.skill_id IN ({$placeholders}) ORDER BY c.skill_id, c.sort_order, c.id
+");
 $critStmt->execute($skillIds);
 $criteria = $critStmt->fetchAll();
 
@@ -132,10 +137,18 @@ require __DIR__ . '/../includes/header.php';
                     </tr>
                     </thead>
                     <tbody>
-                    <?php foreach ($criteriaBySkill[$skillId] ?? [] as $c):
+                    <?php $prevGroupCode = null; foreach ($criteriaBySkill[$skillId] ?? [] as $c):
                         $cid = (int)$c['id'];
                         $prev = $existing[$cid] ?? null;
+                        if (($c['group_code'] ?? null) !== $prevGroupCode && !empty($c['group_code'])):
+                            $prevGroupCode = $c['group_code'];
                     ?>
+                        <tr class="table-light">
+                            <td colspan="5">
+                                <strong><?= e($c['group_code']) ?> <?= e($c['group_name']) ?></strong>
+                            </td>
+                        </tr>
+                    <?php elseif (empty($c['group_code'])): $prevGroupCode = null; endif; ?>
                         <tr>
                             <td><?= e($c['code']) ?></td>
                             <td>

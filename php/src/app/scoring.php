@@ -13,7 +13,12 @@ function scoring_skills_with_criteria(PDO $pdo, ?int $divisionId = null): array
     } else {
         $skills = $pdo->query('SELECT * FROM skills ORDER BY sort_order, id')->fetchAll();
     }
-    $criteria = $pdo->query('SELECT * FROM criteria ORDER BY skill_id, sort_order, id')->fetchAll();
+    $criteria = $pdo->query('
+        SELECT c.*, cg.code AS group_code, cg.name AS group_name
+        FROM criteria c
+        LEFT JOIN criteria_groups cg ON cg.id = c.group_id
+        ORDER BY c.skill_id, c.sort_order, c.id
+    ')->fetchAll();
 
     $bySkill = [];
     foreach ($criteria as $c) {
