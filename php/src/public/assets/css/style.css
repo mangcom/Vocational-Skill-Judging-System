@@ -62,3 +62,174 @@ footer {
 .score-input:invalid {
     border-color: #dc3545;
 }
+
+/* ===== เมนูบน (Topbar) + เมนูด้านข้าง (Sidebar) ===== */
+:root {
+    --sidebar-width: 230px;
+    --sidebar-width-collapsed: 64px;
+    --topbar-height: 56px;
+}
+
+.app-topbar {
+    height: var(--topbar-height);
+    background: #1f2937;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: .75rem;
+    padding: 0 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 1040;
+}
+
+.app-topbar .topbar-left,
+.app-topbar .topbar-right {
+    display: flex;
+    align-items: center;
+    gap: .75rem;
+    min-width: 0;
+}
+
+.app-topbar .brand {
+    color: #fff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.05rem;
+    white-space: nowrap;
+}
+
+.app-topbar .topbar-user {
+    color: #e5e7eb;
+    font-size: .9rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 38vw;
+}
+
+.sidebar-toggle-btn {
+    flex-shrink: 0;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, .25);
+    color: #fff;
+    width: 36px;
+    height: 36px;
+    border-radius: 6px;
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.sidebar-toggle-btn:hover {
+    background: rgba(255, 255, 255, .12);
+}
+
+.app-shell {
+    display: flex;
+    align-items: stretch;
+    min-height: calc(100vh - var(--topbar-height));
+}
+
+.app-sidebar {
+    width: var(--sidebar-width);
+    flex-shrink: 0;
+    background: #212a37;
+    transition: width .18s ease;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.app-sidebar .nav-link {
+    display: flex;
+    align-items: center;
+    gap: .7rem;
+    padding: .6rem .9rem;
+    color: #cbd5e1;
+    white-space: nowrap;
+    border-left: 3px solid transparent;
+    border-radius: 0;
+}
+
+.app-sidebar .nav-link:hover {
+    background: rgba(255, 255, 255, .06);
+    color: #fff;
+}
+
+.app-sidebar .nav-link.active {
+    background: rgba(13, 110, 253, .22);
+    color: #fff;
+    border-left-color: #4dabf7;
+}
+
+.app-sidebar .nav-icon {
+    font-size: 1.1rem;
+    width: 1.4rem;
+    text-align: center;
+    flex-shrink: 0;
+}
+
+.app-sidebar .nav-label {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+html.sidebar-collapsed .app-sidebar {
+    width: var(--sidebar-width-collapsed);
+}
+
+html.sidebar-collapsed .app-sidebar .nav-label {
+    display: none;
+}
+
+html.sidebar-collapsed .app-sidebar .nav-link {
+    justify-content: center;
+    padding: .65rem;
+}
+
+.app-content {
+    flex: 1 1 auto;
+    min-width: 0;
+    padding: 1.5rem 1.5rem 2rem;
+}
+
+/* จอเล็ก (มือถือ/แท็บเล็ต): ซ่อนเมนูด้านข้างไว้นอกจอ เปิดแบบ overlay ทับเนื้อหา */
+@media (max-width: 991.98px) {
+    .app-sidebar {
+        position: fixed;
+        top: var(--topbar-height);
+        left: 0;
+        height: calc(100vh - var(--topbar-height));
+        width: 240px;
+        transform: translateX(-100%);
+        transition: transform .2s ease;
+        z-index: 1035;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, .25);
+    }
+
+    html.sidebar-collapsed .app-sidebar {
+        width: 240px;
+    }
+
+    html.sidebar-collapsed .app-sidebar .nav-label {
+        display: block;
+    }
+
+    html.sidebar-collapsed .app-sidebar .nav-link {
+        justify-content: flex-start;
+        padding: .6rem .9rem;
+    }
+
+    html.sidebar-mobile-open .app-sidebar {
+        transform: translateX(0);
+    }
+
+    .app-content {
+        padding: 1rem 1rem 2rem;
+    }
+}
+
+.division-select-bar .division-select {
+    max-width: 420px;
+}

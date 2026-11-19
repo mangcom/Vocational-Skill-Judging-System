@@ -49,4 +49,43 @@ document.addEventListener('DOMContentLoaded', function () {
             });
         });
     }
+
+    // --- เมนูด้านข้าง (sidebar): ย่อ/ขยายบนจอใหญ่ (จำค่าไว้ด้วย localStorage), เปิด/ปิดแบบ overlay บนมือถือ ---
+    var sidebarToggle = document.getElementById('sidebarToggle');
+    var sidebar = document.getElementById('appSidebar');
+    if (sidebarToggle && sidebar) {
+        var root = document.documentElement;
+        var isMobile = function () {
+            return window.matchMedia('(max-width: 991.98px)').matches;
+        };
+
+        sidebarToggle.addEventListener('click', function () {
+            if (isMobile()) {
+                root.classList.toggle('sidebar-mobile-open');
+            } else {
+                root.classList.toggle('sidebar-collapsed');
+                try {
+                    localStorage.setItem('sidebarCollapsed', root.classList.contains('sidebar-collapsed') ? '1' : '0');
+                } catch (e) {}
+            }
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!isMobile() || !root.classList.contains('sidebar-mobile-open')) {
+                return;
+            }
+            if (sidebar.contains(e.target) || sidebarToggle.contains(e.target)) {
+                return;
+            }
+            root.classList.remove('sidebar-mobile-open');
+        });
+
+        sidebar.querySelectorAll('a.nav-link').forEach(function (link) {
+            link.addEventListener('click', function () {
+                if (isMobile()) {
+                    root.classList.remove('sidebar-mobile-open');
+                }
+            });
+        });
+    }
 });
