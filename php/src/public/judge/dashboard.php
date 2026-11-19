@@ -6,12 +6,12 @@ $pdo = db();
 $judgeId = (int)$user['id'];
 
 $mySkillsStmt = $pdo->prepare('
-    SELECT s.*, d.id AS division_id, d.name AS division_name, d.sort_order AS division_sort
+    SELECT s.*, d.id AS division_id, d.name AS division_name
     FROM skills s
     JOIN judge_skills js ON js.skill_id = s.id
     JOIN divisions d ON d.id = s.division_id
     WHERE js.judge_id = ?
-    ORDER BY d.sort_order, s.sort_order
+    ORDER BY d.name, s.sort_order
 ');
 $mySkillsStmt->execute([$judgeId]);
 $mySkills = $mySkillsStmt->fetchAll();

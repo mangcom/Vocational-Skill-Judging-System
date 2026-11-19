@@ -94,7 +94,7 @@ $divisions = $pdo->query('
         (SELECT COUNT(*) FROM skills s WHERE s.division_id = d.id) AS skill_count,
         (SELECT COUNT(*) FROM teams t WHERE t.division_id = d.id) AS team_count,
         (SELECT COUNT(DISTINCT js.judge_id) FROM judge_skills js JOIN skills s2 ON s2.id = js.skill_id WHERE s2.division_id = d.id) AS judge_count
-    FROM divisions d ORDER BY sort_order
+    FROM divisions d ORDER BY d.name
 ')->fetchAll();
 
 $pageTitle = 'ทักษะ';

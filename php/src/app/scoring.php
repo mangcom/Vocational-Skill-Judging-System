@@ -55,11 +55,11 @@ function scoring_raw_matrix(PDO $pdo): array
 }
 
 /**
- * รายชื่อ division ทั้งหมด เรียงตาม sort_order
+ * รายชื่อ division ทั้งหมด เรียงตามชื่อ (ก-ฮ / A-Z)
  */
 function scoring_all_divisions(PDO $pdo): array
 {
-    return $pdo->query('SELECT * FROM divisions ORDER BY sort_order, id')->fetchAll();
+    return $pdo->query('SELECT * FROM divisions ORDER BY name, id')->fetchAll();
 }
 
 /**

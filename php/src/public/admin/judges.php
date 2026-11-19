@@ -77,9 +77,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 $skills = $pdo->query('
-    SELECT s.*, d.id AS division_id, d.name AS division_name, d.sort_order AS division_sort
+    SELECT s.*, d.id AS division_id, d.name AS division_name
     FROM skills s JOIN divisions d ON d.id = s.division_id
-    ORDER BY d.sort_order, s.sort_order
+    ORDER BY d.name, s.sort_order
 ')->fetchAll();
 $skillsByDivision = [];
 foreach ($skills as $s) {
@@ -104,23 +104,24 @@ if ($filterDivisionId > 0) {
     }));
 }
 
-// --- เรียงลำดับ: ถ้าแสดงทั้งหมด (ไม่กรองทักษะ) เรียงตามทักษะก่อน แล้วค่อยเรียงตามตำแหน่ง, ถ้ากรองแล้วเรียงตามตำแหน่งอย่างเดียว ---
+// --- เรียงลำดับ: ถ้าแสดงทั้งหมด (ไม่กรองทักษะ) เรียงตามชื่อทักษะก่อน แล้วค่อยเรียงตามตำแหน่ง, ถ้ากรองแล้วเรียงตามตำแหน่งอย่างเดียว ---
 $positionRank = array_flip(judge_position_options());
-$skillDivisionSort = [];
+$skillDivisionName = [];
 foreach ($skills as $s) {
-    $skillDivisionSort[(int)$s['id']] = (int)$s['division_sort'];
+    $skillDivisionName[(int)$s['id']] = $s['division_name'];
 }
-$judgePrimaryDivisionSort = [];
+$judgePrimaryDivisionName = [];
 foreach ($judgeSkillMap as $jId => $skillIds) {
-    $sorts = array_map(fn($sid) => $skillDivisionSort[$sid] ?? PHP_INT_MAX, $skillIds);
-    $judgePrimaryDivisionSort[$jId] = $sorts ? min($sorts) : PHP_INT_MAX;
+    $names = array_filter(array_map(fn($sid) => $skillDivisionName[$sid] ?? null, $skillIds));
+    sort($names);
+    $judgePrimaryDivisionName[$jId] = $names ? reset($names) : null;
 }
-usort($judges, function ($a, $b) use ($filterDivisionId, $judgePrimaryDivisionSort, $positionRank) {
+usort($judges, function ($a, $b) use ($filterDivisionId, $judgePrimaryDivisionName, $positionRank) {
     if ($filterDivisionId === 0) {
-        $divA = $judgePrimaryDivisionSort[(int)$a['id']] ?? PHP_INT_MAX;
-        $divB = $judgePrimaryDivisionSort[(int)$b['id']] ?? PHP_INT_MAX;
+        $divA = $judgePrimaryDivisionName[(int)$a['id']] ?? null;
+        $divB = $judgePrimaryDivisionName[(int)$b['id']] ?? null;
         if ($divA !== $divB) {
-            return $divA <=> $divB;
+            return strcmp($divA ?? "\xff", $divB ?? "\xff");
         }
     }
     $posA = $positionRank[$a['position'] ?? 'กรรมการ'] ?? count($positionRank);
