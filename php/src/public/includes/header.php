@@ -31,10 +31,12 @@ $user = current_user();
                     <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/skills.php') ?>">🎯 กลุ่มเกณฑ์การให้คะแนน</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/teams.php') ?>">👥 ทีมผู้เข้าแข่งขัน</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/summary.php') ?>">📊 สรุปคะแนน</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?= base_url('criteria_doc.php') ?>">📖 เกณฑ์การแข่งขัน (สำหรับกรรมการ)</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/score_sheet.php') ?>">🖨️ ใบให้คะแนน (สำรอง)</a></li>
                     <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/backup.php') ?>">🗄️ Import/Export</a></li>
                 <?php else: ?>
                     <li class="nav-item"><a class="nav-link" href="<?= base_url('judge/dashboard.php') ?>">✏️ ให้คะแนน</a></li>
+                    <li class="nav-item"><a class="nav-link" href="<?= base_url('criteria_doc.php') ?>">📖 เกณฑ์การแข่งขัน</a></li>
                     <?php if (is_head_judge($user)): ?>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('admin/summary.php') ?>">📊 ดูผลคะแนน</a></li>
                         <li class="nav-item"><a class="nav-link" href="<?= base_url('judge/assign.php') ?>">🗂️ มอบหมายทีม</a></li>
