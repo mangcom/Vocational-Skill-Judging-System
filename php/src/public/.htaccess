@@ -1,0 +1,11 @@
+# Clean URL: ซ่อนนามสกุล .php ออกจาก URL (เช่น /admin/judges แทน /admin/judges.php)
+RewriteEngine On
+
+# ถ้าขอไฟล์/โฟลเดอร์ที่มีอยู่จริงอยู่แล้ว (css, js, รูปภาพ ฯลฯ) ให้ใช้ตามปกติ ไม่ต้อง rewrite
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# ถ้า path ที่ขอไม่มีไฟล์ตรง ๆ แต่มีไฟล์ .php ชื่อตรงกัน ให้ route ไปที่ไฟล์ .php นั้นแบบไม่เปลี่ยน URL ที่แสดง
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php [L]

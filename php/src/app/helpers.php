@@ -51,7 +51,11 @@ function redirect(string $path): void
 
 function base_url(string $path = ''): string
 {
-    return '/' . ltrim($path, '/');
+    $path = ltrim($path, '/');
+    // ตัดนามสกุล .php ออกเพื่อให้ได้ Clean URL (เช่น admin/judges.php?x=1 -> admin/judges?x=1)
+    // คู่กับ .htaccess ที่ rewrite path ที่ไม่มี .php กลับไปยังไฟล์ .php จริงให้อัตโนมัติ
+    $path = preg_replace('/\.php(\?|$)/', '$1', $path, 1);
+    return '/' . $path;
 }
 
 function judge_position_options(): array

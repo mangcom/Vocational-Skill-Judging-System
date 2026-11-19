@@ -7,7 +7,7 @@
  * แสดงเฉพาะชื่อทักษะที่กำลังจัดการอยู่ (ไม่แสดงรายชื่อทักษะอื่นเกะกะ)
  * ชื่อทักษะเป็นลิงก์กลับไปหน้าจัดการทักษะ (admin/divisions.php) และมีปุ่มลูกศรไว้สลับทักษะ รองรับกรณีมีหลายทักษะในอนาคต
  */
-$scriptPath = $_SERVER['SCRIPT_NAME'];
+$scriptPath = preg_replace('/\.php$/', '', $_SERVER['SCRIPT_NAME']);
 $divTabsUser = current_user();
 ?>
 <div class="btn-group mb-3">
