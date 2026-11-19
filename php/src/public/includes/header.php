@@ -12,8 +12,8 @@ if ($user) {
             ['icon' => '🎯', 'label' => 'กลุ่มเกณฑ์การให้คะแนน', 'href' => 'admin/skills.php'],
             ['icon' => '👥', 'label' => 'ทีมผู้เข้าแข่งขัน', 'href' => 'admin/teams.php'],
             ['icon' => '📊', 'label' => 'สรุปคะแนน', 'href' => 'admin/summary.php'],
-            ['icon' => '📖', 'label' => 'เกณฑ์การแข่งขัน (สำหรับกรรมการ)', 'href' => 'criteria_doc.php'],
-            ['icon' => '🖨️', 'label' => 'ใบให้คะแนน (สำรอง)', 'href' => 'admin/score_sheet.php'],
+            ['icon' => '📖', 'label' => 'เกณฑ์การแข่งขัน', 'href' => 'criteria_doc.php'],
+            ['icon' => '🖨️', 'label' => 'ใบให้คะแนน', 'href' => 'admin/score_sheet.php'],
             ['icon' => '🗄️', 'label' => 'Import/Export', 'href' => 'admin/backup.php'],
         ];
     } else {
@@ -24,7 +24,7 @@ if ($user) {
         if (is_head_judge($user)) {
             $navItems[] = ['icon' => '📊', 'label' => 'ดูผลคะแนน', 'href' => 'admin/summary.php'];
             $navItems[] = ['icon' => '🗂️', 'label' => 'มอบหมายทีม', 'href' => 'judge/assign.php'];
-            $navItems[] = ['icon' => '🖨️', 'label' => 'ใบให้คะแนน (สำรอง)', 'href' => 'admin/score_sheet.php'];
+            $navItems[] = ['icon' => '🖨️', 'label' => 'ใบให้คะแนน', 'href' => 'admin/score_sheet.php'];
         }
     }
     $navItems[] = ['icon' => '❓', 'label' => 'คู่มือการใช้งาน', 'href' => 'help.php'];

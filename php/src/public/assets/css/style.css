@@ -231,5 +231,6 @@ html.sidebar-collapsed .app-sidebar .nav-link {
 }
 
 .division-select-bar .division-select {
-    max-width: 420px;
+    width: auto;
+    max-width: 100%;
 }
