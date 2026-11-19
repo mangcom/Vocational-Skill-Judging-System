@@ -5,7 +5,11 @@ require_role('admin');
 $pdo = db();
 
 $skillId = (int)($_GET['skill_id'] ?? 0);
-$stmt = $pdo->prepare('SELECT * FROM skills WHERE id = ?');
+$stmt = $pdo->prepare('
+    SELECT s.*, d.name AS division_name
+    FROM skills s JOIN divisions d ON d.id = s.division_id
+    WHERE s.id = ?
+');
 $stmt->execute([$skillId]);
 $skill = $stmt->fetch();
 if (!$skill) {
@@ -102,7 +106,11 @@ $sum = array_sum(array_column($criteria, 'max_score'));
 $pageTitle = 'เกณฑ์ย่อย: ' . $skill['name'];
 require __DIR__ . '/../includes/header.php';
 ?>
-<a href="<?= base_url('admin/skills.php?division_id=' . (int)$skill['division_id']) ?>" class="btn btn-sm btn-link mb-2">⬅️ กลับไปหน้ากลุ่มเกณฑ์การให้คะแนน</a>
+<nav class="mb-2 small">
+    <a href="<?= base_url('admin/skills.php?division_id=' . (int)$skill['division_id']) ?>">🏆 <?= e($skill['division_name']) ?></a>
+    <span class="text-muted mx-1">|</span>
+    <a href="<?= base_url('admin/skills.php?division_id=' . (int)$skill['division_id']) ?>">⬅️ กลับไปหน้ากลุ่มเกณฑ์การให้คะแนน</a>
+</nav>
 <div class="d-flex justify-content-between align-items-center mb-3">
     <div>
         <h3 class="mb-0">📋 <?= e($skill['code'] . ' - ' . $skill['name']) ?></h3>
