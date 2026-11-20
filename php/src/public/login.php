@@ -15,11 +15,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($username === '' || $password === '') {
         $error = 'กรุณากรอกชื่อผู้ใช้และรหัสผ่าน';
     } else {
-        $user = attempt_login($username, $password);
-        if (!$user) {
-            $error = 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';
-        } else {
+        $result = attempt_login($username, $password);
+        if ($result['status'] === 'needs_2fa') {
+            redirect(base_url('verify_2fa.php'));
+        } elseif ($result['status'] === 'ok') {
+            $user = $result['user'];
             redirect($user['role'] === 'admin' ? base_url('admin/dashboard.php') : base_url('judge/dashboard.php'));
+        } else {
+            $error = 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง';
         }
     }
 }

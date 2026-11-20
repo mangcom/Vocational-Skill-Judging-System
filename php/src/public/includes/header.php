@@ -12,14 +12,14 @@ if ($user) {
             ['icon' => '🎯', 'label' => 'กลุ่มเกณฑ์การให้คะแนน', 'href' => 'admin/skills.php'],
             ['icon' => '👥', 'label' => 'ทีมผู้เข้าแข่งขัน', 'href' => 'admin/teams.php'],
             ['icon' => '📊', 'label' => 'สรุปคะแนน', 'href' => 'admin/summary.php'],
-            ['icon' => '📖', 'label' => 'เกณฑ์การแข่งขัน', 'href' => 'criteria_doc.php'],
+            ['icon' => '📖', 'label' => 'เกณฑ์การให้คะแนน', 'href' => 'criteria_doc.php'],
             ['icon' => '🖨️', 'label' => 'ใบให้คะแนน', 'href' => 'admin/score_sheet.php'],
             ['icon' => '🗄️', 'label' => 'Import/Export', 'href' => 'admin/backup.php'],
         ];
     } else {
         $navItems = [
             ['icon' => '✏️', 'label' => 'ให้คะแนน', 'href' => 'judge/dashboard.php'],
-            ['icon' => '📖', 'label' => 'เกณฑ์การแข่งขัน', 'href' => 'criteria_doc.php'],
+            ['icon' => '📖', 'label' => 'เกณฑ์การให้คะแนน', 'href' => 'criteria_doc.php'],
         ];
         if (is_head_judge($user)) {
             $navItems[] = ['icon' => '📊', 'label' => 'ดูผลคะแนน', 'href' => 'admin/summary.php'];
@@ -27,6 +27,7 @@ if ($user) {
             $navItems[] = ['icon' => '🖨️', 'label' => 'ใบให้คะแนน', 'href' => 'admin/score_sheet.php'];
         }
     }
+    $navItems[] = ['icon' => '👤', 'label' => 'โปรไฟล์ของฉัน', 'href' => 'profile.php'];
     $navItems[] = ['icon' => '❓', 'label' => 'คู่มือการใช้งาน', 'href' => 'help.php'];
 }
 

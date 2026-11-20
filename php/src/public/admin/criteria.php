@@ -1,6 +1,6 @@
 <?php
 require __DIR__ . '/../../app/bootstrap.php';
-require_role('admin');
+$user = require_login();
 
 $pdo = db();
 
@@ -14,8 +14,15 @@ $stmt->execute([$skillId]);
 $skill = $stmt->fetch();
 if (!$skill) {
     flash_set('error', 'ไม่พบทักษะที่เลือก');
-    redirect(base_url('admin/skills.php'));
+    redirect(base_url($user['role'] === 'admin' ? 'admin/skills.php' : 'criteria_doc.php'));
 }
+
+// --- ประธานกรรมการ/กรรมการและเลขานุการ แก้ไขเกณฑ์ได้เฉพาะกลุ่มเกณฑ์ที่ตนเองรับผิดชอบ ส่วน Admin แก้ไขได้ทุกกลุ่ม ---
+if (!can_manage_skill_criteria($user, $pdo, $skillId)) {
+    http_response_code(403);
+    exit('ไม่มีสิทธิ์เข้าถึงหน้านี้ (ต้องเป็น Admin หรือประธานกรรมการ/กรรมการและเลขานุการที่รับผิดชอบกลุ่มเกณฑ์นี้)');
+}
+$isAdmin = $user['role'] === 'admin';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     csrf_verify();
@@ -106,11 +113,15 @@ $sum = array_sum(array_column($criteria, 'max_score'));
 $pageTitle = 'เกณฑ์ย่อย: ' . $skill['name'];
 require __DIR__ . '/../includes/header.php';
 ?>
+<?php $backUrl = base_url($isAdmin ? 'admin/skills.php?division_id=' . (int)$skill['division_id'] : 'criteria_doc.php?division_id=' . (int)$skill['division_id']); ?>
 <nav class="mb-2 small">
-    <a href="<?= base_url('admin/skills.php?division_id=' . (int)$skill['division_id']) ?>">🏆 <?= e($skill['division_name']) ?></a>
+    <a href="<?= $backUrl ?>">🏆 <?= e($skill['division_name']) ?></a>
     <span class="text-muted mx-1">|</span>
-    <a href="<?= base_url('admin/skills.php?division_id=' . (int)$skill['division_id']) ?>">⬅️ กลับไปหน้ากลุ่มเกณฑ์การให้คะแนน</a>
+    <a href="<?= $backUrl ?>">⬅️ กลับไปหน้า<?= $isAdmin ? 'กลุ่มเกณฑ์การให้คะแนน' : 'เกณฑ์การให้คะแนน' ?></a>
 </nav>
+<?php if (!$isAdmin): ?>
+<div class="alert alert-info py-2 small">ℹ️ ท่านแก้ไขได้เฉพาะเกณฑ์ของกลุ่มเกณฑ์นี้ ในฐานะ<?= e(position_label($user['position'] ?? '')) ?>ที่รับผิดชอบ</div>
+<?php endif; ?>
 <div class="d-flex justify-content-between align-items-center mb-3">
     <div>
         <h3 class="mb-0">📋 <?= e($skill['code'] . ' - ' . $skill['name']) ?></h3>

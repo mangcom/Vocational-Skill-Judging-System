@@ -64,6 +64,9 @@ $pdo->exec("CREATE TABLE IF NOT EXISTS users (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4");
 safe_exec($pdo, "ALTER TABLE users ADD COLUMN position ENUM('ประธานกรรมการ','รองประธานกรรมการ','กรรมการ','กรรมการและเลขานุการ','ผู้ช่วยกรรมการและเลขานุการ') NOT NULL DEFAULT 'กรรมการ' AFTER role");
+safe_exec($pdo, "ALTER TABLE users ADD COLUMN avatar_path VARCHAR(255) NULL AFTER full_name");
+safe_exec($pdo, "ALTER TABLE users ADD COLUMN totp_secret VARCHAR(64) NULL AFTER is_active");
+safe_exec($pdo, "ALTER TABLE users ADD COLUMN totp_enabled TINYINT(1) NOT NULL DEFAULT 0 AFTER totp_secret");
 
 $pdo->exec("CREATE TABLE IF NOT EXISTS skills (
     id INT AUTO_INCREMENT PRIMARY KEY,

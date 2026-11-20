@@ -4,6 +4,10 @@
 php/src/storage/uploads/*
 !php/src/storage/uploads/.gitkeep
 
+# รูปโปรไฟล์ที่ผู้ใช้อัปโหลดจริงระหว่างใช้งาน (ไม่ควรอยู่ใน git)
+php/src/public/assets/uploads/avatars/*
+!php/src/public/assets/uploads/avatars/.gitkeep
+
 # OS / editor
 .DS_Store
 Thumbs.db

@@ -15,6 +15,16 @@ $currentDivisionId = (int)$currentDivision['id'];
 $skillsStmt = $pdo->prepare('SELECT * FROM skills WHERE division_id = ? ORDER BY sort_order, id');
 $skillsStmt->execute([$currentDivisionId]);
 $skills = $skillsStmt->fetchAll();
+
+// --- กรรมการ (ไม่ใช่ Admin) เห็นเฉพาะกลุ่มเกณฑ์ที่ตนเองรับผิดชอบเท่านั้น ห้ามเห็นกลุ่มเกณฑ์อื่นในทักษะนี้ ---
+$myAssignedSkillIds = null;
+if ($user['role'] !== 'admin') {
+    $assignedStmt = $pdo->prepare('SELECT skill_id FROM judge_skills WHERE judge_id = ?');
+    $assignedStmt->execute([(int)$user['id']]);
+    $myAssignedSkillIds = array_map('intval', array_column($assignedStmt->fetchAll(), 'skill_id'));
+    $skills = array_values(array_filter($skills, fn($s) => in_array((int)$s['id'], $myAssignedSkillIds, true)));
+}
+
 $skillsById = [];
 foreach ($skills as $s) {
     $skillsById[(int)$s['id']] = $s;
@@ -208,12 +218,12 @@ if ($wantsPrint) {
 }
 
 // --- หน้าเลือกทักษะ/กลุ่มเกณฑ์ที่จะพิมพ์ ---
-$pageTitle = 'เกณฑ์การแข่งขัน (สำหรับกรรมการอ่าน)';
+$pageTitle = 'เกณฑ์การให้คะแนน (สำหรับกรรมการอ่าน)';
 require __DIR__ . '/includes/header.php';
 require __DIR__ . '/includes/division_tabs.php';
 ?>
 <div class="d-flex justify-content-between align-items-center mb-3">
-    <h3>📖 เอกสารเกณฑ์การแข่งขัน: <?= e($currentDivision['name']) ?></h3>
+    <h3>📖 เอกสารเกณฑ์การให้คะแนน: <?= e($currentDivision['name']) ?></h3>
 </div>
 
 <div class="alert alert-info">
@@ -230,7 +240,7 @@ require __DIR__ . '/includes/division_tabs.php';
 <?php endif; ?>
 
 <?php if (empty($skills)): ?>
-    <p class="text-muted">ยังไม่มีกลุ่มเกณฑ์ในทักษะนี้</p>
+    <p class="text-muted"><?= $myAssignedSkillIds !== null ? 'ท่านยังไม่ได้รับมอบหมายกลุ่มเกณฑ์ในทักษะนี้' : 'ยังไม่มีกลุ่มเกณฑ์ในทักษะนี้' ?></p>
 <?php else: ?>
 <form method="post" target="_blank">
     <input type="hidden" name="division_id" value="<?= $currentDivisionId ?>">
@@ -249,6 +259,7 @@ require __DIR__ . '/includes/division_tabs.php';
                     <th>คะแนนเต็ม</th>
                     <th>จำนวนเกณฑ์ย่อย</th>
                     <th>ประเภท</th>
+                    <th></th>
                 </tr>
                 </thead>
                 <tbody>
@@ -256,6 +267,7 @@ require __DIR__ . '/includes/division_tabs.php';
                     $cntStmt = $pdo->prepare('SELECT COUNT(*) c FROM criteria WHERE skill_id = ?');
                     $cntStmt->execute([$s['id']]);
                     $critCount = (int)$cntStmt->fetch()['c'];
+                    $canEditThisSkill = can_manage_skill_criteria($user, $pdo, (int)$s['id']);
                 ?>
                     <tr>
                         <td><input type="checkbox" class="form-check-input skill-checkbox" name="skill_ids[]" value="<?= (int)$s['id'] ?>" checked></td>
@@ -264,6 +276,11 @@ require __DIR__ . '/includes/division_tabs.php';
                         <td><?= fmt_score($s['max_score']) ?></td>
                         <td><?= $critCount ?> ข้อ</td>
                         <td><?= $s['is_bonus'] ? '<span class="badge bg-warning text-dark">🎁 โจทย์พิเศษ</span>' : '<span class="badge bg-primary">🏅 คะแนนหลัก</span>' ?></td>
+                        <td>
+                            <?php if ($canEditThisSkill && $user['role'] !== 'admin'): ?>
+                                <a href="<?= base_url('admin/criteria.php?skill_id=' . (int)$s['id']) ?>" class="btn btn-sm btn-outline-primary">✏️ แก้ไขเกณฑ์</a>
+                            <?php endif; ?>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
                 </tbody>
