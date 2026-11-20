@@ -281,3 +281,7 @@ judge-scoring/
 ## 🧪 เทคโนโลยีที่ใช้
 
 PHP 8.2 (Apache) + MariaDB 11 + Bootstrap 5 + SweetAlert2 + ฟอนต์ Saraban — รันผ่าน Docker Compose เพื่อให้ติดตั้งซ้ำง่ายในระดับภาค/ระดับชาติ
+
+## 👨‍💻 ผู้พัฒนา
+
+พัฒนาโดย **นายพรชัย ตุ่นแก้ว** วิทยาลัยพณิชยการบางนา ด้วย [Claude Code](https://claude.com/claude-code)

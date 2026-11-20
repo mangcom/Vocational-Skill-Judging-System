@@ -64,6 +64,7 @@ $pageTitle = 'เข้าสู่ระบบ';
             </form>
         </div>
     </div>
+    <p class="text-center text-muted small mt-3">พัฒนาโดย นายพรชัย ตุ่นแก้ว วิทยาลัยพณิชยการบางนา &middot; ด้วย Claude Code</p>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
