@@ -84,7 +84,7 @@ if ($wantsPrint) {
 <html lang="th">
 <head>
     <meta charset="utf-8">
-    <title>เกณฑ์การแข่งขัน - <?= e($currentDivision['name']) ?></title>
+    <title>เกณฑ์การให้คะแนน - <?= e($currentDivision['name']) ?></title>
     <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         @page { size: A4; margin: 16mm 14mm; }
@@ -138,7 +138,7 @@ if ($wantsPrint) {
 <div class="doc">
     <div class="cover">
         <div class="badge">📖</div>
-        <h1>เอกสารเกณฑ์การแข่งขันสำหรับกรรมการ</h1>
+        <h1>เอกสารเกณฑ์การให้คะแนนสำหรับกรรมการ</h1>
         <h2><?= e($currentDivision['name']) ?></h2>
         <div class="purpose">
             📌 เอกสารนี้จัดทำขึ้นให้กรรมการผู้ประเมินอ่านทำความเข้าใจ <strong>หัวข้อใหญ่ หัวข้อย่อย และวิธีตรวจ/เกณฑ์การให้คะแนน</strong>
