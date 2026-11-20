@@ -80,7 +80,7 @@ require __DIR__ . '/../includes/division_tabs.php';
                 <th>ชื่อทีม / สถานศึกษา</th>
                 <th>โจทย์ที่จับได้</th>
                 <th>หมายเหตุ</th>
-                <th class="text-end">จัดการ</th>
+                <th class="text-end col-manage">จัดการ</th>
             </tr>
             </thead>
             <tbody>
@@ -90,7 +90,7 @@ require __DIR__ . '/../includes/division_tabs.php';
                     <td><?= e($t['team_name']) ?></td>
                     <td><?= e($t['problem_set'] ?? '-') ?></td>
                     <td class="text-muted small"><?= e($t['notes'] ?? '') ?></td>
-                    <td class="text-end">
+                    <td class="text-end col-manage">
                         <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editTeam<?= (int)$t['id'] ?>">✏️ แก้ไข</button>
                         <form method="post" class="d-inline" data-confirm="ลบทีม '<?= e($t['team_name']) ?>' ใช่หรือไม่? คะแนนทั้งหมดของทีมนี้จะถูกลบ">
                             <?= csrf_field() ?>

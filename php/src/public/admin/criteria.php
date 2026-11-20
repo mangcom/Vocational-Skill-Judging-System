@@ -142,14 +142,14 @@ require __DIR__ . '/../includes/header.php';
     <div class="card-header">📑 หัวข้อ (ไม่มีคะแนนในตัวเอง — ใช้จัดกลุ่มเกณฑ์ย่อยหลายข้อไว้ด้วยกัน)</div>
     <div class="card-body table-responsive">
         <table class="table table-sm align-middle mb-0">
-            <thead><tr><th style="width:90px;">รหัส</th><th>ชื่อหัวข้อ</th><th>คำอธิบาย</th><th class="text-end">จัดการ</th></tr></thead>
+            <thead><tr><th style="width:90px;">รหัส</th><th>ชื่อหัวข้อ</th><th>คำอธิบาย</th><th class="text-end col-manage">จัดการ</th></tr></thead>
             <tbody>
             <?php foreach ($groups as $g): ?>
                 <tr>
                     <td><?= e($g['code']) ?></td>
                     <td><?= e($g['name']) ?></td>
                     <td class="text-muted small"><?= e($g['description']) ?></td>
-                    <td class="text-end">
+                    <td class="text-end col-manage">
                         <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editGroup<?= (int)$g['id'] ?>">✏️ แก้ไข</button>
                         <form method="post" class="d-inline" data-confirm="ลบหัวข้อ '<?= e($g['code']) ?>' ใช่หรือไม่? (เกณฑ์ย่อยในหัวข้อนี้จะยังอยู่ แต่จะไม่มีหัวข้อกำกับ)">
                             <?= csrf_field() ?>
@@ -204,7 +204,7 @@ require __DIR__ . '/../includes/header.php';
                 <th>รายการ</th>
                 <th>วิธีตรวจ / เกณฑ์ได้คะแนน</th>
                 <th style="width:90px;">คะแนนเต็ม</th>
-                <th class="text-end">จัดการ</th>
+                <th class="text-end col-manage">จัดการ</th>
             </tr>
             </thead>
             <tbody>
@@ -225,7 +225,7 @@ require __DIR__ . '/../includes/header.php';
                     <td><?= e($c['name']) ?></td>
                     <td class="text-muted small"><?= e($c['description']) ?></td>
                     <td><?= fmt_score($c['max_score']) ?></td>
-                    <td class="text-end">
+                    <td class="text-end col-manage">
                         <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editCriteria<?= (int)$c['id'] ?>">✏️ แก้ไข</button>
                         <form method="post" class="d-inline" data-confirm="ลบเกณฑ์ข้อ '<?= e($c['code']) ?>' ใช่หรือไม่?">
                             <?= csrf_field() ?>

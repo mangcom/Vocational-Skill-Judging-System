@@ -161,7 +161,7 @@ require __DIR__ . '/../includes/header.php';
                 <th>ตำแหน่ง</th>
                 <th>รับผิดชอบทักษะ / กลุ่มเกณฑ์การให้คะแนน</th>
                 <th>สถานะ</th>
-                <th class="text-end">จัดการ</th>
+                <th class="text-end col-manage">จัดการ</th>
             </tr>
             </thead>
             <tbody>
@@ -195,7 +195,7 @@ require __DIR__ . '/../includes/header.php';
                     <td>
                         <?= $judge['is_active'] ? '<span class="badge bg-success">✅ ใช้งาน</span>' : '<span class="badge bg-secondary">🚫 ปิดใช้งาน</span>' ?>
                     </td>
-                    <td class="text-end">
+                    <td class="text-end col-manage">
                         <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editModal<?= (int)$judge['id'] ?>">✏️ แก้ไข</button>
                         <form method="post" class="d-inline" data-confirm="ลบกรรมการ '<?= e($judge['full_name']) ?>' ใช่หรือไม่? คะแนนที่ให้ไว้จะถูกลบทั้งหมด">
                             <?= csrf_field() ?>

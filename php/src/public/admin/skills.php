@@ -89,7 +89,7 @@ require __DIR__ . '/../includes/division_tabs.php';
                 <th>คะแนนเต็ม</th>
                 <th>จำนวนเกณฑ์ย่อย</th>
                 <th>ประเภท</th>
-                <th class="text-end">จัดการ</th>
+                <th class="text-end col-manage">จัดการ</th>
             </tr>
             </thead>
             <tbody>
@@ -105,7 +105,7 @@ require __DIR__ . '/../includes/division_tabs.php';
                     </td>
                     <td><?= (int)$s['criteria_count'] ?> ข้อ</td>
                     <td><?= $s['is_bonus'] ? '<span class="badge bg-warning text-dark">🎁 โจทย์พิเศษ (ไม่รวมใน 100)</span>' : '<span class="badge bg-primary">🏅 คะแนนหลัก</span>' ?></td>
-                    <td class="text-end">
+                    <td class="text-end col-manage">
                         <a href="<?= base_url('admin/criteria.php?skill_id=' . (int)$s['id']) ?>" class="btn btn-sm btn-outline-primary">📋 จัดการเกณฑ์ย่อย</a>
                         <button class="btn btn-sm btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#editSkill<?= (int)$s['id'] ?>">✏️ แก้ไข</button>
                         <form method="post" class="d-inline" data-confirm="ลบกลุ่มเกณฑ์ '<?= e($s['name']) ?>' ใช่หรือไม่? เกณฑ์ย่อยและคะแนนทั้งหมดในกลุ่มนี้จะถูกลบ">
