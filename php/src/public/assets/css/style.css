@@ -39,8 +39,6 @@ body {
 .table-responsive {
     max-height: 70vh;
     overflow: auto;
-    scroll-snap-type: y mandatory;
-    scroll-padding-top: 2.75rem;
 }
 
 .table-responsive > .table {
@@ -53,19 +51,8 @@ body {
     top: 0;
     z-index: 2;
     background-color: #fff;
-    /* เงาตัวแรกคือเส้นขอบล่างของหัวตาราง เงาตัวที่สองทึบสีขาวยื่นขึ้นไปด้านบนอีก 40px เพื่อปิดทับส่วนของแถวที่อาจยังโผล่ค้างอยู่เหนือหัวตารางเล็กน้อย
-       (box-shadow ถูก .table-responsive ที่ overflow:auto ครอบตัดอยู่แล้ว จึงไม่ล้นไปบังเนื้อหาอื่นนอกกรอบตาราง) */
-    box-shadow: inset 0 -1px 0 #dee2e6, 0 -40px 0 0 #fff;
+    box-shadow: inset 0 -1px 0 #dee2e6;
     white-space: nowrap; /* หัวตารางบรรทัดเดียวเสมอ ไม่ตกบรรทัด */
-    height: 2.75rem; /* กำหนดความสูงหัวตารางตายตัว ให้ตรงกับ scroll-padding-top เป๊ะ ไม่พึ่งการคำนวณความสูงจาก padding/font ที่อาจคลาดเคลื่อน */
-    line-height: 2.75rem;
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
-/* เลื่อนแล้วสะดุด (snap) ให้ขอบบนของแต่ละแถวเสมอขอบล่างของหัวตารางพอดี กันไม่ให้เห็นแถวถูกตัดครึ่งค้างอยู่ใต้หัวตารางตอนหยุดเลื่อน */
-.table-responsive tbody tr {
-    scroll-snap-align: start;
 }
 
 /* คอลัมน์ "จัดการ" ท้ายตาราง: ให้ปุ่มแก้ไข/ลบอยู่แถวเดียวกัน ไม่ตกบรรทัด */
