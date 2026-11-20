@@ -33,6 +33,23 @@ body {
     overflow-y: auto;
 }
 
+/* ===== ตารางยาว ๆ เลื่อนดูได้ในกรอบของตัวเอง โดยหัวตาราง (thead) ค้างอยู่ด้านบนเสมอ จะได้เห็นว่าแต่ละคอลัมน์คือข้อมูลอะไรระหว่างเลื่อนดู/กรอกข้อมูล =====
+   หมายเหตุ: ตั้งใจไม่ใช้ position:sticky อิงกับการเลื่อนทั้งหน้า เพราะ .table-responsive ของ Bootstrap (overflow-x:auto)
+   ทำให้ sticky แบบอิงหน้าใช้ไม่ได้ในหลายเบราว์เซอร์ จึงให้กรอบตารางเองเป็นผู้เลื่อนแทน (overflow-y:auto) และ sticky top:0 ภายในกรอบนั้น */
+.table-responsive {
+    max-height: 70vh;
+    overflow-y: auto;
+}
+
+.table-responsive thead th,
+.table-fixed-height thead th {
+    position: sticky;
+    top: 0;
+    z-index: 5;
+    background-color: #fff;
+    box-shadow: inset 0 -2px 0 #dee2e6;
+}
+
 footer {
     color: #8a93a2;
     font-size: 0.85rem;
