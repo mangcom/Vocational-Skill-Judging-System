@@ -1,8 +1,7 @@
 <?php
 require __DIR__ . '/../app/bootstrap.php';
 
-require_login();
-
+// เปิดให้ดาวน์โหลดได้โดยไม่ต้อง Login (ใช้โดยหน้า public_criteria.php ให้บุคคลภายนอกดาวน์โหลดไฟล์เกณฑ์การแข่งขันต้นฉบับได้)
 $pdo = db();
 $divisionId = (int)($_GET['division_id'] ?? 0);
 

@@ -35,7 +35,7 @@ judge-scoring/
 │           ├── profile.php      # self-service: name, avatar, password, 2FA enable/disable
 │           ├── criteria_doc.php # printable "เกณฑ์การให้คะแนน" doc (requires login); ALSO the entry point judges use to edit their own criteria
 │           ├── public_criteria.php # same printable doc, NO login required (linked from login.php) — public/press/parents viewing
-│           ├── download_criteria.php  # serves division's uploaded original rules PDF (auth-gated)
+│           ├── download_criteria.php  # serves division's uploaded original rules PDF — intentionally PUBLIC (no login), linked from public_criteria.php
 │           ├── admin/           # divisions, skills, criteria, judges, teams, summary, summary_detail, score_sheet, backup
 │           ├── judge/           # dashboard, score, assign
 │           ├── includes/        # header.php (sidebar+topbar shell), footer.php, division_tabs.php

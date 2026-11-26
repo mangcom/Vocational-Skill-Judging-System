@@ -216,6 +216,13 @@ require __DIR__ . '/includes/division_tabs.php';
     ติ๊กเลือกกลุ่มเกณฑ์ที่ต้องการ แล้วกด "สร้างและพิมพ์เอกสาร" ระบบจะเปิดหน้าต่างใหม่ให้พิมพ์หรือบันทึกเป็น PDF (A4, Font Saraban)
 </div>
 
+<?php if ($currentDivision['criteria_file_path']): ?>
+<div class="alert alert-light border">
+    📎 ไฟล์เกณฑ์การแข่งขันต้นฉบับ (เอกสารทางการที่อัปโหลดไว้):
+    <a href="<?= base_url('download_criteria.php?division_id=' . $currentDivisionId) ?>"><?= e($currentDivision['criteria_file_name']) ?></a>
+</div>
+<?php endif; ?>
+
 <?php if (empty($skills)): ?>
     <p class="text-muted">ยังไม่มีกลุ่มเกณฑ์ในทักษะนี้</p>
 <?php else: ?>

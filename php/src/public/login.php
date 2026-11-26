@@ -65,7 +65,7 @@ $pageTitle = 'เข้าสู่ระบบ';
             <a href="<?= base_url('public_criteria.php') ?>" class="btn btn-outline-secondary w-100 mt-2">📖 ดูเกณฑ์การให้คะแนน (ไม่ต้องเข้าสู่ระบบ)</a>
         </div>
     </div>
-    <p class="text-center text-muted small mt-3">พัฒนาโดย นายพรชัย ตุ่นแก้ว วิทยาลัยพณิชยการบางนา<br><?= claude_logo_svg() ?> ด้วย Claude Code</p>
+    <p class="text-center text-muted small mt-3">พัฒนาโดย นายพรชัย ตุ่นแก้ว วิทยาลัยพณิชยการบางนา<br>ด้วย <?= claude_logo_svg() ?> Claude Code</p>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
