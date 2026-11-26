@@ -298,4 +298,5 @@ PHP 8.2 (Apache) + MariaDB 11 + Bootstrap 5 + SweetAlert2 + ฟอนต์ Sara
 
 ## 👨‍💻 ผู้พัฒนา
 
-พัฒนาโดย **นายพรชัย ตุ่นแก้ว** วิทยาลัยพณิชยการบางนา ด้วย [Claude Code](https://claude.com/claude-code)
+พัฒนาโดย **นายพรชัย ตุ่นแก้ว** วิทยาลัยพณิชยการบางนา
+🤖 ด้วย [Claude Code](https://claude.com/claude-code)
