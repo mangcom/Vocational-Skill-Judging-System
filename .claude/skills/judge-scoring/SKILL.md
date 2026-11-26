@@ -33,7 +33,8 @@ judge-scoring/
 │           ├── index.php, login.php, logout.php, install.php, help.php
 │           ├── verify_2fa.php   # 2nd login step when user.totp_enabled
 │           ├── profile.php      # self-service: name, avatar, password, 2FA enable/disable
-│           ├── criteria_doc.php # printable "เกณฑ์การให้คะแนน" doc; ALSO the entry point judges use to edit their own criteria
+│           ├── criteria_doc.php # printable "เกณฑ์การให้คะแนน" doc (requires login); ALSO the entry point judges use to edit their own criteria
+│           ├── public_criteria.php # same printable doc, NO login required (linked from login.php) — public/press/parents viewing
 │           ├── download_criteria.php  # serves division's uploaded original rules PDF (auth-gated)
 │           ├── admin/           # divisions, skills, criteria, judges, teams, summary, summary_detail, score_sheet, backup
 │           ├── judge/           # dashboard, score, assign

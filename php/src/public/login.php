@@ -62,6 +62,7 @@ $pageTitle = 'เข้าสู่ระบบ';
                 </div>
                 <button type="submit" class="btn btn-primary w-100">🔐 เข้าสู่ระบบ</button>
             </form>
+            <a href="<?= base_url('public_criteria.php') ?>" class="btn btn-outline-secondary w-100 mt-2">📖 ดูเกณฑ์การให้คะแนน (ไม่ต้องเข้าสู่ระบบ)</a>
         </div>
     </div>
     <p class="text-center text-muted small mt-3">พัฒนาโดย นายพรชัย ตุ่นแก้ว วิทยาลัยพณิชยการบางนา &middot; ด้วย Claude Code</p>
